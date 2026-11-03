@@ -7,7 +7,7 @@
 #   python3 -c "from lexico import Lexico; from sintatico import Sintatico; Sintatico(Lexico(open('testes/exemplo.d', encoding='utf-8'))).testaLexico()" 
 #   
 #   //Ele mostra como o léxico reage a um erro: imprime os tokens até o primeiro erro e para.
-#   python3 -c "from lexico import Lexico; from sintatico import Sintatico; Sintatico(Lexico(open('testes/erros.d', encoding='utf-8'))).testaLexico()"
+#   python3 -c "from lexico import Lexico; from sintatico import Sintatico; Sintatico(Lexico(open('../analisador-lexico/testes/erros.d', encoding='utf-8'))).testaLexico()"
 # ---------------------------------------------------
 
 # ---------------------------------------------------
