@@ -1,4 +1,12 @@
 # ---------------------------------------------------
+# COMO RODAR: copie cada linha sem o # do inicio
+#   cd ~/DEV/Compiladores/compilador-d/analisador-sintatico
+#   python3 main.py testes/exemplo.d
+#   python3 -c "from lexico import Lexico; from sintatico import Sintatico; Sintatico(Lexico(open('testes/exemplo.d', encoding='utf-8'))).testaLexico()"
+#   python3 -c "from lexico import Lexico; from sintatico import Sintatico; Sintatico(Lexico(open('../analisador-lexico/testes/erros.d', encoding='utf-8'))).testaLexico()"
+# ---------------------------------------------------
+
+# ---------------------------------------------------
 # Analisador lexico da linguagem D
 # Automato de reconhecimento: le o fonte caractere por caractere
 # e agrupa os caracteres em tokens

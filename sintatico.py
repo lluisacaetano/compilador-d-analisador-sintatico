@@ -1,4 +1,12 @@
 # ---------------------------------------------------
+# COMO RODAR: copie cada linha sem o # do inicio
+#   cd ~/DEV/Compiladores/compilador-d/analisador-sintatico
+#   python3 main.py testes/exemplo.d
+#   python3 -c "from lexico import Lexico; from sintatico import Sintatico; Sintatico(Lexico(open('testes/exemplo.d', encoding='utf-8'))).testaLexico()"
+#   python3 -c "from lexico import Lexico; from sintatico import Sintatico; Sintatico(Lexico(open('../analisador-lexico/testes/erros.d', encoding='utf-8'))).testaLexico()"
+# ---------------------------------------------------
+
+# ---------------------------------------------------
 # Tradutor para a linguagem D
 # Analisador sintatico descendente recursivo: cada nao-terminal da gramatica
 # vira um metodo, e o metodo chama os outros na ordem da producao
