@@ -1,71 +1,75 @@
 # ---------------------------------------------------
 # Analisador lexico da linguagem D
-# Tabela de tokens
+# Tabela de tokens: lista todos os tipos de token que existem na linguagem
 # ---------------------------------------------------
 
+# IntEnum: cada nome (ex.: TOKEN.ident) vira uma constante com um numero inteiro
 from enum import IntEnum
 
 
 class TOKEN(IntEnum):
     # controle
-    erro = 1
-    eof = 2
+    erro = 1            # sequencia invalida (ex.: @ ou 12abc)
+    eof = 2             # fim do arquivo
 
     # identificadores e literais
-    ident = 3
-    valorInt = 4
-    valorFloat = 5
-    valorString = 6
+    ident = 3           # nome de variavel ou funcao: contador, Total_1
+    valorInt = 4        # numero inteiro: 42
+    valorFloat = 5      # numero com ponto: 3.14
+    valorString = 6     # texto entre aspas: "ola"
 
     # delimitadores e separadores
-    virgula = 7
-    ptoVirg = 8
-    abrePar = 9
-    fechaPar = 10
-    abreCol = 11
-    fechaCol = 12
-    abreChave = 13
-    fechaChave = 14
-    endereco = 15
+    virgula = 7         # ,
+    ptoVirg = 8         # ;
+    abrePar = 9         # (
+    fechaPar = 10       # )
+    abreCol = 11        # [
+    fechaCol = 12       # ]
+    abreChave = 13      # {
+    fechaChave = 14     # }
+    endereco = 15       # &  (parametro por referencia: int &a)
 
     # operadores
-    increm = 16
-    decrem = 17
+    increm = 16         # ++
+    decrem = 17         # --
     oprel = 18          # >  >=  <  <=  ==  !=  (o lexema identifica qual)
-    mais = 19
-    menos = 20
-    multiplica = 21
-    divide = 22
-    atribuicao = 23
+    mais = 19           # +
+    menos = 20          # -
+    multiplica = 21     # *
+    divide = 22         # /
+    atribuicao = 23     # =
 
-    # palavras reservadas
-    INT = 24
-    FLOAT = 25
-    STRING = 26
-    VOID = 27
-    BREAK = 28
-    CONTINUE = 29
-    LOOP = 30
-    WHILE = 31
-    FOR = 32
-    IN = 33
-    IF = 34
-    ELIF = 35
-    ELSE = 36
-    READ = 37
-    WRITE = 38
-    OR = 39
-    AND = 40
-    NOT = 41
-    DIV = 42
-    MOD = 43
-    RETURN = 44
+    # palavras reservadas: em maiusculas para nao colidir com palavras do Python
+    INT = 24            # tipo inteiro
+    FLOAT = 25          # tipo real
+    STRING = 26         # tipo texto
+    VOID = 27           # funcao sem retorno
+    BREAK = 28          # sai da repeticao
+    CONTINUE = 29       # vai para a proxima volta da repeticao
+    LOOP = 30           # repeticao sem condicao
+    WHILE = 31          # repeticao com condicao
+    FOR = 32            # repeticao for
+    IN = 33             # usado no for (i in lista)
+    IF = 34             # decisao
+    ELIF = 35           # senao-se
+    ELSE = 36           # senao
+    READ = 37           # entrada
+    WRITE = 38          # saida
+    OR = 39             # ou logico
+    AND = 40            # e logico
+    NOT = 41            # negacao logica
+    DIV = 42            # divisao inteira
+    MOD = 43            # resto da divisao
+    RETURN = 44         # retorno de funcao
 
     # funcoes primitivas
     funcPrim = 45       # str2int, str2float, int2str, float2string
 
+    # msg: recebe um token e devolve o nome legivel, usado nas impressoes e
+    # nas mensagens de erro (ex.: TOKEN.ptoVirg -> ';')
     @classmethod
     def msg(cls, token):
+        # dicionario numero do token -> texto mostrado ao usuario
         nomes = {
             1: 'erro',
             2: '<eof>',
@@ -115,10 +119,13 @@ class TOKEN(IntEnum):
         }
         return nomes[token]
 
+    # reservada: recebe uma palavra lida do fonte e decide o que ela e:
+    # palavra reservada, funcao primitiva ou identificador.
     # comparacao exata: a linguagem e case sensitive, entao 'While' e
     # 'or' permanecem identificadores
     @classmethod
     def reservada(cls, lexema):
+        # dicionario palavra -> token
         reservadas = {
             'int': TOKEN.INT,
             'float': TOKEN.FLOAT,
@@ -142,6 +149,7 @@ class TOKEN(IntEnum):
             'mod': TOKEN.MOD,
             'return': TOKEN.RETURN
         }
+        # as 4 funcoes primitivas compartilham um unico token
         primitivas = ['str2int', 'str2float', 'int2str', 'float2string']
 
         if lexema in reservadas:
@@ -149,4 +157,5 @@ class TOKEN(IntEnum):
         elif lexema in primitivas:
             return TOKEN.funcPrim
         else:
+            # nao e reservada nem primitiva: e um nome criado pelo programador
             return TOKEN.ident
