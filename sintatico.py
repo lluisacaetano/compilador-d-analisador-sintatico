@@ -74,14 +74,17 @@ class Sintatico:
             print(f"Era esperado {esperado} mas veio {msgTokenLido}")
         raise Exception
 
-    # testaLexico: imprime todos os tokens, sem analisar a gramatica
+    # testaLexico: imprime os tokens, sem analisar a gramatica; para no primeiro
+    # erro ou no fim do arquivo
     def testaLexico(self):
         self.tokenLido = self.lexico.getToken()
         (token, lexema, linha, coluna) = self.tokenLido
-        while token != TOKEN.eof:
+        while token not in [TOKEN.eof, TOKEN.erro]:
             self.lexico.imprimeToken(self.tokenLido)
             self.tokenLido = self.lexico.getToken()
             (token, lexema, linha, coluna) = self.tokenLido
+        # imprime tambem o token que parou a leitura: o erro ou o <eof>
+        self.lexico.imprimeToken(self.tokenLido)
 
     # --------------------------------- gramática -------------------------------------
 
