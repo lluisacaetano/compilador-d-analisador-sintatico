@@ -9,6 +9,8 @@ int soma(int a, int &b, float c[], string &d[]) {
     total = [1, 2, 3];
     x = y[0] = z = 10;
     nome = "resultado: \"parcial\"";
+    x = str2int("10");
+    nome = int2str(x);
 
     while (i < 3) {
         total[i] = total[i] + a * 2 - b / 2;

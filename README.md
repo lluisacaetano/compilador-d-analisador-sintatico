@@ -57,8 +57,8 @@ Erro lexico: token invalido "@"
 4. **`write ( ListaExp );`** — `)` e `;` são dois tokens: `write ( ListaExp ) ;`.
 5. **`OpcPos → LAMBDA | [ Exp ]`** não é usado por nenhuma regra; não foi implementado.
 6. **Funções primitivas** (`str2int`, `str2float`, `int2str`, `float2string`): o léxico
-   as reconhece como `funcPrim`, mas a gramática não tem regra para elas. O parser segue
-   a gramática, então `a = str2int(s);` dá erro sintático.
+   as reconhece como `funcPrim`, mas a gramática não tem regra para elas.
+   **Correção:** `Folha → funcPrim ( ListaParam )`, então `a = str2int(s);` é aceito.
 7. Nada restringe o lado esquerdo do `=`, então `1 = 2;` passa na análise sintática.
    Verificar se o lado esquerdo é atribuível fica para a análise semântica.
 8. Só a **primeira** variável de uma declaração aceita inicialização (`int x = 1, y;` é

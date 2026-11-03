@@ -14,7 +14,7 @@ if __name__ == '__main__':
     else:
         caminho = 'testes/exemplo.d'
 
-    arqfonte = open(caminho, 'r')
+    arqfonte = open(caminho, 'r', encoding='utf-8')
     lexico = Lexico(arqfonte)
     arqfonte.close()
 

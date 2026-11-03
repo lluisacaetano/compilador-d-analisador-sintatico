@@ -16,8 +16,11 @@ class Sintatico:
             self.prog()
             self.consome(TOKEN.eof)
             print("Programa sintaticamente correto.")
-        except:
-            pass
+        except Exception as e:
+            # erro sintatico ja foi impresso e vem sem mensagem;
+            # qualquer outro erro (ex.: recursao) precisa aparecer
+            if e.args:
+                print(f"Execucao interrompida: {e}")
 
     def proximoToken(self):
         if self.tokenSeguinte is not None:
@@ -190,7 +193,8 @@ class Sintatico:
                                  TOKEN.increm, TOKEN.decrem, TOKEN.NOT,
                                  TOKEN.mais, TOKEN.menos, TOKEN.valorInt,
                                  TOKEN.valorFloat, TOKEN.valorString,
-                                 TOKEN.abrePar, TOKEN.ident, TOKEN.abreCol]:
+                                 TOKEN.abrePar, TOKEN.ident, TOKEN.abreCol,
+                                 TOKEN.funcPrim]:
             self.com()
             self.listaCom()
         else:
@@ -327,7 +331,8 @@ class Sintatico:
         if self.tokenLido[0] in [TOKEN.increm, TOKEN.decrem, TOKEN.NOT,
                                  TOKEN.mais, TOKEN.menos, TOKEN.valorInt,
                                  TOKEN.valorFloat, TOKEN.valorString,
-                                 TOKEN.abrePar, TOKEN.ident, TOKEN.abreCol]:
+                                 TOKEN.abrePar, TOKEN.ident, TOKEN.abreCol,
+                                 TOKEN.funcPrim]:
             self.exp()
         else:
             pass
@@ -468,6 +473,7 @@ class Sintatico:
         # Folha -> valorInt | valorFloat | valorString | ValorLista
         # Folha -> ( Zero )
         # Folha -> ident RestoFolha
+        # Folha -> funcPrim ( ListaParam )
         if self.tokenLido[0] == TOKEN.valorInt:
             self.consome(TOKEN.valorInt)
         elif self.tokenLido[0] == TOKEN.valorFloat:
@@ -483,6 +489,11 @@ class Sintatico:
         elif self.tokenLido[0] == TOKEN.ident:
             self.consome(TOKEN.ident)
             self.restoFolha()
+        elif self.tokenLido[0] == TOKEN.funcPrim:
+            self.consome(TOKEN.funcPrim)
+            self.consome(TOKEN.abrePar)
+            self.listaParam()
+            self.consome(TOKEN.fechaPar)
         else:
             self.erro("uma expressao")
 
@@ -504,7 +515,8 @@ class Sintatico:
         if self.tokenLido[0] in [TOKEN.increm, TOKEN.decrem, TOKEN.NOT,
                                  TOKEN.mais, TOKEN.menos, TOKEN.valorInt,
                                  TOKEN.valorFloat, TOKEN.valorString,
-                                 TOKEN.abrePar, TOKEN.ident, TOKEN.abreCol]:
+                                 TOKEN.abrePar, TOKEN.ident, TOKEN.abreCol,
+                                 TOKEN.funcPrim]:
             self.param()
             self.restoListaParam()
         else:

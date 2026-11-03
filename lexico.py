@@ -155,8 +155,7 @@ class Lexico:
                 elif simbolo == '.':
                     estado = 31
                 elif self.eLetra(simbolo) or simbolo == '_':
-                    lexema += simbolo
-                    return (TOKEN.erro, lexema, lin, col)
+                    estado = 33
                 else:
                     self.ungetchar(simbolo)
                     return (TOKEN.valorInt, lexema, lin, col)
@@ -174,11 +173,18 @@ class Lexico:
                 if self.eDigito(simbolo):
                     estado = 32
                 elif self.eLetra(simbolo) or simbolo == '_':
-                    lexema += simbolo
-                    return (TOKEN.erro, lexema, lin, col)
+                    estado = 33
                 else:
                     self.ungetchar(simbolo)
                     return (TOKEN.valorFloat, lexema, lin, col)
+
+            elif estado == 33:
+                # numero seguido de letra: o erro vai ate o fim da palavra
+                if self.eLetraDigitoSublinha(simbolo):
+                    estado = 33
+                else:
+                    self.ungetchar(simbolo)
+                    return (TOKEN.erro, lexema, lin, col)
 
             elif estado == 4:
                 # strings, com escapes do tipo \" e \\
