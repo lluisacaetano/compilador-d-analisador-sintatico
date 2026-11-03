@@ -1,5 +1,5 @@
 # ---------------------------------------------------
-# COMO RODAR: copie cada linha sem o # do inicio
+# COMO RODAR:
 #   cd ~/DEV/Compiladores/compilador-d/analisador-sintatico
 #   python3 main.py testes/exemplo.d
 

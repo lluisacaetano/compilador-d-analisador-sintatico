@@ -30,7 +30,7 @@ int soma(int a, int &b, float c[], string &d[]) {
         write(i, " ", nome);
     }
 
-    for (i = 0; i > 5; ++i) {
+    for (; i > 5; ++i) {
         --i;
         media = media * 7 div 2 mod 3;
     }
