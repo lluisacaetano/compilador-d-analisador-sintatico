@@ -2,7 +2,11 @@
 # COMO RODAR: copie cada linha sem o # do inicio
 #   cd ~/DEV/Compiladores/compilador-d/analisador-sintatico
 #   python3 main.py testes/exemplo.d
-#   python3 -c "from lexico import Lexico; from sintatico import Sintatico; Sintatico(Lexico(open('testes/exemplo.d', encoding='utf-8'))).testaLexico()"
+
+#   /// Mostra os tokens do testes/exemplo.d, sem conferir a gramática.
+#   python3 -c "from lexico import Lexico; from sintatico import Sintatico; Sintatico(Lexico(open('testes/exemplo.d', encoding='utf-8'))).testaLexico()" 
+#   
+#   //Ele mostra como o léxico reage a um erro: imprime os tokens até o primeiro erro e para.
 #   python3 -c "from lexico import Lexico; from sintatico import Sintatico; Sintatico(Lexico(open('testes/erros.d', encoding='utf-8'))).testaLexico()"
 # ---------------------------------------------------
 
